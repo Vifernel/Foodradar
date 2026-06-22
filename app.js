@@ -1,65 +1,88 @@
-// ==================================
-// FOODRADAR - Main JavaScript File
-// ==================================
+// =================================
+// FOODRADAR APP.JS
+// =================================
 
 console.log("FoodRadar is running 🚀");
 
 
-// Exemple de données nourriture (MVP)
-// Plus tard, ces données viendront d'une base de données
+// Food database (temporary)
 
 const foods = [
-    {
-        name: "Waakye",
-        price: "30 GHS",
-        vendor: "Mama's Kitchen",
-        location: "Kumasi",
-        category: "Ghanaian Food"
-    },
-    {
-        name: "Fufu & Light Soup",
-        price: "40 GHS",
-        vendor: "Local Food Spot",
-        location: "Kumasi",
-        category: "Traditional Food"
-    },
-    {
-        name: "Jollof Rice",
-        price: "35 GHS",
-        vendor: "Royal Taste",
-        location: "Kumasi",
-        category: "African Food"
-    }
+
+{
+    name: "Waakye",
+    image: "assets/waakye.jpg",
+    description: "Traditional Ghanaian rice and beans",
+    price: "30 GHS",
+    distance: "500m"
+},
+
+{
+    name: "Fufu & Light Soup",
+    image: "assets/fufu.jpg",
+    description: "Authentic Ghanaian traditional meal",
+    price: "40 GHS",
+    distance: "800m"
+},
+
+{
+    name: "Jollof Rice",
+    image: "assets/jollof.jpg",
+    description: "Popular African rice dish",
+    price: "35 GHS",
+    distance: "1km"
+},
+
+{
+    name: "Kelewele",
+    image: "assets/kelewele.jpg",
+    description: "Spicy fried plantain",
+    price: "10 GHS",
+    distance: "300m"
+}
+
 ];
 
 
-// Afficher les plats dans la console pour tester
+// Wait for page to load (IMPORTANT FIX)
 
-foods.forEach(food => {
-    console.log(
-        food.name + 
-        " - " + 
-        food.vendor
-    );
+document.addEventListener("DOMContentLoaded", function () {
+
+    const foodContainer = document.getElementById("food-container");
+
+    // Check if container exists (avoid errors on other pages)
+    if (!foodContainer) return;
+
+
+    foods.forEach(food => {
+
+        const card = document.createElement("div");
+
+        card.classList.add("food-card");
+
+
+        card.innerHTML = `
+
+            <img src="${food.image}" alt="${food.name}">
+
+            <h3>${food.name}</h3>
+
+            <p>${food.description}</p>
+
+            <div class="info">
+
+                <span>${food.price}</span>
+
+                <span>📍 ${food.distance}</span>
+
+            </div>
+
+            <button>View Food</button>
+
+        `;
+
+        foodContainer.appendChild(card);
+
+    });
+
 });
-
-
-// Fonction recherche nourriture
-
-function searchFood(keyword) {
-
-    const results = foods.filter(food =>
-        food.name
-        .toLowerCase()
-        .includes(keyword.toLowerCase())
-    );
-
-    return results;
-}
-
-
-// Exemple utilisation
-
-console.log(
-    searchFood("Waakye")
-);
