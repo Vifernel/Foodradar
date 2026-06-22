@@ -226,3 +226,27 @@ if (document.getElementById("map") && typeof L !== "undefined") {
 
     });
 }
+// =================================
+// ORDER SYSTEM (NEW)
+// =================================
+
+function orderFood() {
+
+    const params = new URLSearchParams(window.location.search);
+    const foodId = parseInt(params.get("id"));
+
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    const newOrder = {
+        id: Date.now(),
+        foodId: foodId,
+        status: "pending",
+        time: new Date().toISOString()
+    };
+
+    orders.push(newOrder);
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    alert("🛒 Order placed successfully!");
+}
