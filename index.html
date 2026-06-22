@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>FoodRadar</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- 🗺️ LEAFLET CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 
@@ -19,6 +21,7 @@
 </header>
 
 
+<!-- HERO -->
 <section class="hero">
 
   <h2>Discover food around you in Kumasi</h2>
@@ -42,21 +45,31 @@
 </section>
 
 
-<!-- ICI ON REMPLACE LES ANCIENNES CARTES -->
-
+<!-- FOOD SECTION -->
 <section class="food-section">
 
 <h2>Popular Food Near You</h2>
 
-<div id="food-container" class="food-container">
-
-</div>
+<div id="food-container" class="food-container"></div>
 
 </section>
 
 
+<!-- MAP SECTION -->
+<section class="map-section">
+
+  <h2>🗺️ Food Map</h2>
+
+  <div id="map"></div>
+
+</section>
+
+
+<!-- SCRIPTS -->
 <script src="app.js"></script>
+
+<!-- 🗺️ LEAFLET JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  
+
 </body>
 </html>
