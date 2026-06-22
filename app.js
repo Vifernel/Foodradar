@@ -42,7 +42,7 @@ const foods = [
 
 
 // =================================
-// GPS USER (NEW)
+// GPS USER (REAL)
 // =================================
 
 let userLocation = null;
@@ -66,13 +66,14 @@ function getUserLocation(callback) {
         },
         (error) => {
             console.log("GPS error:", error);
+            alert("Please enable location to use FoodRadar 📍");
         }
     );
 }
 
 
 // =================================
-// DISTANCE CALCULATOR (NEW)
+// DISTANCE CALCULATOR (REAL)
 // =================================
 
 function getDistance(lat1, lon1, lat2, lon2) {
@@ -95,35 +96,6 @@ function getDistance(lat1, lon1, lat2, lon2) {
 
 
 // =================================
-// NEAR ME SYSTEM (NEW)
-// =================================
-
-function getNearbyFoods() {
-
-    if (!userLocation) return foods;
-
-    return foods.map(food => {
-
-        const fakeLat = 6.6885 + Math.random() * 0.02;
-        const fakeLng = -1.6244 + Math.random() * 0.02;
-
-        const distance = getDistance(
-            userLocation.lat,
-            userLocation.lng,
-            fakeLat,
-            fakeLng
-        );
-
-        return {
-            ...food,
-            distanceValue: distance
-        };
-    })
-    .sort((a, b) => a.distanceValue - b.distanceValue);
-}
-
-
-// =================================
 // FOOD CARDS RENDERING
 // =================================
 
@@ -131,31 +103,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const foodContainer = document.getElementById("food-container");
 
-    if (foodContainer) {
+    if (!foodContainer) return;
 
-        foods.forEach((food) => {
+    foods.forEach((food) => {
 
-            const card = document.createElement("div");
-            card.classList.add("food-card");
+        const card = document.createElement("div");
+        card.classList.add("food-card");
 
-            card.innerHTML = `
-                <img src="${food.image}" alt="${food.name}">
-                <h3>${food.name}</h3>
-                <p>${food.description}</p>
+        card.innerHTML = `
+            <img src="${food.image}" alt="${food.name}">
+            <h3>${food.name}</h3>
+            <p>${food.description}</p>
 
-                <div class="info">
-                    <span>${food.price}</span>
-                    <span>📍 ${food.distance}</span>
-                </div>
+            <div class="info">
+                <span>${food.price}</span>
+                <span>📍 ${food.distance}</span>
+            </div>
 
-                <button onclick="viewFood(${food.id})">
-                    View Food
-                </button>
-            `;
+            <button onclick="viewFood(${food.id})">
+                View Food
+            </button>
+        `;
 
-            foodContainer.appendChild(card);
-        });
-    }
+        foodContainer.appendChild(card);
+    });
 });
 
 
@@ -169,13 +140,14 @@ function viewFood(id) {
 
 
 // =================================
-// LEAFLET MAP (SAFE VERSION + GPS)
+// LEAFLET MAP + GPS + NEAR ME
 // =================================
 
 if (document.getElementById("map") && typeof L !== "undefined") {
 
     getUserLocation((pos) => {
 
+        // MAP CENTER ON USER
         const map = L.map('map').setView([pos.lat, pos.lng], 14);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -190,7 +162,7 @@ if (document.getElementById("map") && typeof L !== "undefined") {
             .openPopup();
 
 
-        // FOOD PLACES
+        // FOOD PLACES (REAL COORDINATES BASE)
         const foodPlaces = [
             {
                 id: 1,
@@ -230,6 +202,13 @@ if (document.getElementById("map") && typeof L !== "undefined") {
         // MARKERS + POPUPS
         foodPlaces.forEach(place => {
 
+            const distance = getDistance(
+                pos.lat,
+                pos.lng,
+                place.lat,
+                place.lng
+            );
+
             const marker = L.marker([place.lat, place.lng]).addTo(map);
 
             marker.bindPopup(`
@@ -247,7 +226,7 @@ if (document.getElementById("map") && typeof L !== "undefined") {
                     </p>
 
                     <p style="margin:5px 0; font-weight:bold">
-                        ⭐ Popular Ghanaian dish
+                        🚶 ${distance.toFixed(2)} km away
                     </p>
 
                     <button 
