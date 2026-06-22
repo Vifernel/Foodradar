@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -20,38 +20,17 @@
 <!-- DYNAMIC CONTENT -->
 <div id="food-details"></div>
 
-<!-- SCRIPTS -->
+<!-- ============================= -->
+<!-- SUPABASE (IMPORTANT FUTURE USE) -->
+<!-- ============================= -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<!-- ============================= -->
+<!-- APP SCRIPTS -->
+<!-- ============================= -->
 <script src="app.js"></script>
 <script src="food.js"></script>
-
-<!-- ORDER SYSTEM (CLEAN VERSION) -->
-<script>
-function orderFood() {
-
-    const params = new URLSearchParams(window.location.search);
-    const foodId = parseInt(params.get("id"));
-
-    if (!foodId) {
-        alert("Food not found ❌");
-        return;
-    }
-
-    let orders = JSON.parse(localStorage.getItem("orders")) || [];
-
-    const newOrder = {
-        id: Date.now(),
-        foodId: foodId,
-        status: "pending",
-        time: new Date().toISOString()
-    };
-
-    orders.push(newOrder);
-
-    localStorage.setItem("orders", JSON.stringify(orders));
-
-    alert("🛒 Order placed successfully!");
-}
-</script>
 
 </body>
 </html>
