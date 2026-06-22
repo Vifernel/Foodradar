@@ -51,7 +51,10 @@ const foods = [
 ];
 
 
-// GET ID FROM URL
+// ================================
+// GET FOOD ID FROM URL
+// ================================
+
 const params = new URLSearchParams(window.location.search);
 const foodId = parseInt(params.get("id"));
 
@@ -60,7 +63,10 @@ const container = document.getElementById("food-details");
 const food = foods.find(f => f.id === foodId);
 
 
+// ================================
 // DISPLAY FOOD DETAILS
+// ================================
+
 if (food && container) {
 
     container.innerHTML = `
@@ -81,7 +87,7 @@ if (food && container) {
 
         <div class="food-actions">
 
-            <a class="btn-map" href="https://www.google.com/maps?q=${food.location}">
+            <a class="btn-map" href="https://www.google.com/maps?q=${food.location}" target="_blank">
                 📍 Get Directions
             </a>
 
