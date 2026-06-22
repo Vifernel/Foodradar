@@ -1,29 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Vendor Dashboard - FoodRadar</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Vendor Dashboard</title>
 </head>
 
 <body>
 
-<header>
-  <h1>👨‍🍳 Vendor Dashboard</h1>
-</header>
+<h1>👨‍🍳 Vendor Dashboard</h1>
 
-<section>
+<input id="name" placeholder="Food name">
+<input id="price" placeholder="Price">
+<input id="image" placeholder="Image URL">
+<textarea id="desc" placeholder="Description"></textarea>
 
-  <h2>Add New Food</h2>
+<button onclick="addFood()">Add Food</button>
 
-  <input type="text" id="foodName" placeholder="Food name">
-  <input type="text" id="foodImage" placeholder="Image URL (assets/...)">
-  <input type="text" id="foodPrice" placeholder="Price (GHS)">
-  <input type="text" id="foodLocation" placeholder="Location name">
+<hr>
 
-  <button onclick="addFood()">➕ Add Food</button>
-
-</section>
+<h2>My Foods</h2>
+<div id="myFoods"></div>
 
 <script src="vendor.js"></script>
 
