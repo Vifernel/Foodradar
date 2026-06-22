@@ -2,17 +2,18 @@ console.log("FoodRadar is running 🚀");
 
 
 // =================================
-// FOOD DATABASE (MVP)
+// FOOD DATABASE (MVP + FUTURE READY)
 // =================================
 
-const foods = [
+const defaultFoods = [
 {
     id: 1,
     name: "Waakye",
     image: "assets/waakye.jpg",
     description: "Traditional Ghanaian rice and beans",
     price: "30 GHS",
-    distance: "500m"
+    lat: 6.6885,
+    lng: -1.6244
 },
 {
     id: 2,
@@ -20,7 +21,8 @@ const foods = [
     image: "assets/fufu.jpg",
     description: "Authentic Ghanaian traditional meal",
     price: "40 GHS",
-    distance: "800m"
+    lat: 6.6950,
+    lng: -1.6300
 },
 {
     id: 3,
@@ -28,7 +30,8 @@ const foods = [
     image: "assets/jollof.jpg",
     description: "Popular African rice dish",
     price: "35 GHS",
-    distance: "1km"
+    lat: 6.6800,
+    lng: -1.6200
 },
 {
     id: 4,
@@ -36,13 +39,23 @@ const foods = [
     image: "assets/kelewele.jpg",
     description: "Spicy fried plantain",
     price: "10 GHS",
-    distance: "300m"
+    lat: 6.6905,
+    lng: -1.6150
 }
 ];
 
 
 // =================================
-// GPS USER (REAL)
+// VENDEUR FOODS (LOCAL STORAGE)
+// =================================
+
+let vendorFoods = JSON.parse(localStorage.getItem("vendorFoods")) || [];
+
+const allFoods = [...defaultFoods, ...vendorFoods];
+
+
+// =================================
+// GPS USER
 // =================================
 
 let userLocation = null;
@@ -66,7 +79,7 @@ function getUserLocation(callback) {
         },
         (error) => {
             console.log("GPS error:", error);
-            alert("Please enable location to use FoodRadar 📍");
+            alert("Please enable location 📍");
         }
     );
 }
@@ -96,7 +109,7 @@ function getDistance(lat1, lon1, lat2, lon2) {
 
 
 // =================================
-// FOOD CARDS RENDERING
+// FOOD CARDS (HOME PAGE)
 // =================================
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -105,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!foodContainer) return;
 
-    foods.forEach((food) => {
+    allFoods.forEach((food) => {
 
         const card = document.createElement("div");
         card.classList.add("food-card");
@@ -117,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             <div class="info">
                 <span>${food.price}</span>
-                <span>📍 ${food.distance}</span>
+                <span>📍 Nearby</span>
             </div>
 
             <button onclick="viewFood(${food.id})">
@@ -131,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // =================================
-// VIEW FOOD NAVIGATION
+// NAVIGATION
 // =================================
 
 function viewFood(id) {
@@ -140,14 +153,13 @@ function viewFood(id) {
 
 
 // =================================
-// LEAFLET MAP + GPS + NEAR ME
+// MAP + GPS + UBER EATS STYLE
 // =================================
 
 if (document.getElementById("map") && typeof L !== "undefined") {
 
     getUserLocation((pos) => {
 
-        // MAP CENTER ON USER
         const map = L.map('map').setView([pos.lat, pos.lng], 14);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -162,45 +174,8 @@ if (document.getElementById("map") && typeof L !== "undefined") {
             .openPopup();
 
 
-        // FOOD PLACES (REAL COORDINATES BASE)
-        const foodPlaces = [
-            {
-                id: 1,
-                name: "Waakye Spot",
-                lat: 6.6885,
-                lng: -1.6244,
-                food: "Waakye",
-                image: "assets/waakye.jpg"
-            },
-            {
-                id: 2,
-                name: "Fufu Kitchen",
-                lat: 6.6950,
-                lng: -1.6300,
-                food: "Fufu & Light Soup",
-                image: "assets/fufu.jpg"
-            },
-            {
-                id: 3,
-                name: "Jollof Center",
-                lat: 6.6800,
-                lng: -1.6200,
-                food: "Jollof Rice",
-                image: "assets/jollof.jpg"
-            },
-            {
-                id: 4,
-                name: "Kelewele Street",
-                lat: 6.6905,
-                lng: -1.6150,
-                food: "Kelewele",
-                image: "assets/kelewele.jpg"
-            }
-        ];
-
-
-        // MARKERS + POPUPS
-        foodPlaces.forEach(place => {
+        // FOOD MARKERS
+        defaultFoods.forEach(place => {
 
             const distance = getDistance(
                 pos.lat,
@@ -219,10 +194,10 @@ if (document.getElementById("map") && typeof L !== "undefined") {
                         style="width:100%; height:120px; object-fit:cover; border-radius:10px;"
                     >
 
-                    <h3 style="margin:5px 0">${place.food}</h3>
+                    <h3 style="margin:5px 0">${place.name}</h3>
 
                     <p style="margin:0; font-size:12px">
-                        📍 ${place.name}
+                        📍 Nearby Food
                     </p>
 
                     <p style="margin:5px 0; font-weight:bold">
@@ -247,7 +222,6 @@ if (document.getElementById("map") && typeof L !== "undefined") {
 
                 </div>
             `);
-
         });
 
     });
