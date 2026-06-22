@@ -16,12 +16,9 @@
 
   <nav>
     <a href="map.html">Explore Food</a>
-
-    <!-- ✅ FIXED -->
     <a href="vendor.html">Become a Vendor</a>
   </nav>
 </header>
-
 
 <!-- HERO -->
 <section class="hero">
@@ -38,7 +35,6 @@
       📍 Explore Map
     </a>
 
-    <!-- ✅ FIXED -->
     <a class="btn secondary" href="vendor.html">
       👨‍🍳 Become a Vendor
     </a>
@@ -47,16 +43,14 @@
 
 </section>
 
-
 <!-- FOOD SECTION -->
 <section class="food-section">
 
-<h2>Popular Food Near You</h2>
+  <h2>Popular Food Near You</h2>
 
-<div id="food-container" class="food-container"></div>
+  <div id="food-container" class="food-container"></div>
 
 </section>
-
 
 <!-- MAP SECTION -->
 <section class="map-section">
@@ -67,16 +61,19 @@
 
 </section>
 
+<!-- ========================= -->
+<!-- SCRIPTS (CORRECT ORDER) -->
+<!-- ========================= -->
 
-<!-- SCRIPTS -->
+<!-- Leaflet FIRST (IMPORTANT) -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Supabase (ready for future auth + database) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="supabase.js"></script>
 
+<!-- App logic -->
 <script src="app.js"></script>
-
-<!-- 🗺️ LEAFLET JS -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 </body>
 </html>
