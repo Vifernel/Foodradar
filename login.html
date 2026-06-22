@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Vendor</title>
+</head>
+
+<body>
+
+<h2>Vendor Login</h2>
+
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<hr>
+
+<h3>Register</h3>
+
+<input id="nameR" placeholder="Name">
+<input id="emailR" placeholder="Email">
+<input id="passwordR" type="password" placeholder="Password">
+
+<button onclick="register()">Create Account</button>
+
+<script src="auth.js"></script>
+
+<script>
+function login(){
+    loginVendor(
+        document.getElementById("email").value,
+        document.getElementById("password").value
+    );
+}
+
+function register(){
+    registerVendor(
+        document.getElementById("nameR").value,
+        document.getElementById("emailR").value,
+        document.getElementById("passwordR").value
+    );
+}
+</script>
+
+</body>
+</html>
