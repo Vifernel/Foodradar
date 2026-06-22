@@ -1,29 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Vendor Dashboard</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1>👨‍🍳 Vendor Dashboard</h1>
+<header>
+  <h1>👨‍🍳 Vendor Dashboard</h1>
+</header>
 
-<input id="name" placeholder="Food name">
-<input id="price" placeholder="Price">
-<input id="image" placeholder="Image URL">
-<textarea id="desc" placeholder="Description"></textarea>
+<!-- ========================= -->
+<!-- ADD FOOD FORM -->
+<!-- ========================= -->
+<section style="max-width:500px;margin:auto;">
 
-<button onclick="addFood()">Add Food</button>
+  <h2>Add New Food</h2>
+
+  <input id="name" placeholder="Food name"><br><br>
+  <input id="price" placeholder="Price"><br><br>
+  <input id="image" placeholder="Image URL"><br><br>
+  <textarea id="desc" placeholder="Description"></textarea><br><br>
+
+  <button onclick="addFood()">➕ Add Food</button>
+
+</section>
 
 <hr>
 
-<h2>My Foods</h2>
-<div id="myFoods"></div>
+<!-- ========================= -->
+<!-- MY FOODS LIST -->
+<!-- ========================= -->
+<section style="max-width:700px;margin:auto;">
 
+  <h2>🍽 My Foods</h2>
+  <div id="myFoods"></div>
+
+</section>
+
+<!-- ========================= -->
+<!-- SUPABASE CORE -->
+<!-- ========================= -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="supabase.js"></script>
 
+<!-- ========================= -->
+<!-- VENDOR LOGIC -->
+<!-- ========================= -->
 <script src="vendor.js"></script>
 
 </body>
