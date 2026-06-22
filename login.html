@@ -1,38 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login Vendor</title>
+  <meta charset="UTF-8">
+  <title>Vendor Login - FoodRadar</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h2>Vendor Login</h2>
+<header>
+  <h1>👨‍🍳 FoodRadar Login</h1>
+</header>
 
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
+<!-- ======================= -->
+<!-- LOGIN FORM -->
+<!-- ======================= -->
+<section style="max-width:400px;margin:auto;">
 
-<button onclick="login()">Login</button>
+  <h2>Vendor Login</h2>
+
+  <input id="email" placeholder="Email"><br><br>
+  <input id="password" type="password" placeholder="Password"><br><br>
+
+  <button onclick="login()">Login</button>
+
+</section>
 
 <hr>
 
-<h3>Register</h3>
+<!-- ======================= -->
+<!-- REGISTER FORM -->
+<!-- ======================= -->
+<section style="max-width:400px;margin:auto;">
 
-<input id="nameR" placeholder="Name">
-<input id="emailR" placeholder="Email">
-<input id="passwordR" type="password" placeholder="Password">
+  <h3>Create Account</h3>
 
-<button onclick="register()">Create Account</button>
+  <input id="nameR" placeholder="Name"><br><br>
+  <input id="emailR" placeholder="Email"><br><br>
+  <input id="passwordR" type="password" placeholder="Password"><br><br>
 
-<!-- ✅ SUPABASE CORE (IMPORTANT) -->
+  <button onclick="register()">Create Account</button>
+
+</section>
+
+<!-- ======================= -->
+<!-- SUPABASE CORE -->
+<!-- ======================= -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- ✅ TA CONNEXION SUPABASE -->
 <script src="supabase.js"></script>
 
-<!-- ✅ TON AUTH LOGIC -->
+<!-- ======================= -->
+<!-- AUTH LOGIC -->
+<!-- ======================= -->
 <script src="auth.js"></script>
 
-<!-- EXISTING FUNCTIONS -->
+<!-- ======================= -->
+<!-- UI FUNCTIONS -->
+<!-- ======================= -->
 <script>
 function login(){
     loginVendor(
