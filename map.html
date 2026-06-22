@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FoodRadar Map</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2 style="text-align:center;">🍽 Food Near You</h2>
+
+<div id="map" style="height:500px;"></div>
+
+<script>
+function initMap() {
+  var kumasi = { lat: 6.6885, lng: -1.6244 };
+
+  var map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 14,
+    center: kumasi
+  });
+
+  // Exemple markers (vendeurs)
+  new google.maps.Marker({position: kumasi, map: map, title: "Waakye Spot"});
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async></script>
+
+</body>
+</html>
