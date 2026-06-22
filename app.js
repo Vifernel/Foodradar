@@ -89,7 +89,6 @@ function viewFood(id) {
 // =================================
 // LEAFLET MAP (SAFE VERSION)
 // =================================
-
 if (document.getElementById("map") && typeof L !== "undefined") {
 
     const map = L.map('map').setView([6.6885, -1.6244], 13);
@@ -99,26 +98,85 @@ if (document.getElementById("map") && typeof L !== "undefined") {
     }).addTo(map);
 
 
+    // 🍛 FOOD PLACES (UPDATED VERSION)
     const foodPlaces = [
-        { id: 1, name: "Waakye Spot", lat: 6.6885, lng: -1.6244, food: "Waakye" },
-        { id: 2, name: "Fufu Kitchen", lat: 6.6950, lng: -1.6300, food: "Fufu & Light Soup" },
-        { id: 3, name: "Jollof Center", lat: 6.6800, lng: -1.6200, food: "Jollof Rice" },
-        { id: 4, name: "Kelewele Street", lat: 6.6905, lng: -1.6150, food: "Kelewele" }
+        {
+            id: 1,
+            name: "Waakye Spot",
+            lat: 6.6885,
+            lng: -1.6244,
+            food: "Waakye",
+            image: "assets/waakye.jpg"
+        },
+        {
+            id: 2,
+            name: "Fufu Kitchen",
+            lat: 6.6950,
+            lng: -1.6300,
+            food: "Fufu & Light Soup",
+            image: "assets/fufu.jpg"
+        },
+        {
+            id: 3,
+            name: "Jollof Center",
+            lat: 6.6800,
+            lng: -1.6200,
+            food: "Jollof Rice",
+            image: "assets/jollof.jpg"
+        },
+        {
+            id: 4,
+            name: "Kelewele Street",
+            lat: 6.6905,
+            lng: -1.6150,
+            food: "Kelewele",
+            image: "assets/kelewele.jpg"
+        }
     ];
 
 
+    // 📍 MARKERS + POPUP PRO
     foodPlaces.forEach(place => {
 
         const marker = L.marker([place.lat, place.lng]).addTo(map);
 
         marker.bindPopup(`
-            <b>${place.food}</b><br>
-            ${place.name}<br><br>
+            <div style="width:200px">
 
-            <button onclick="viewFood(${place.id})">
-                View Food 🍛
-            </button>
+                <img 
+                    src="${place.image}" 
+                    style="width:100%; height:120px; object-fit:cover; border-radius:10px;"
+                >
+
+                <h3 style="margin:5px 0">${place.food}</h3>
+
+                <p style="margin:0; font-size:12px">
+                    📍 ${place.name}
+                </p>
+
+                <p style="margin:5px 0; font-weight:bold">
+                    ⭐ Popular Ghanaian dish
+                </p>
+
+                <button 
+                    onclick="viewFood(${place.id})"
+                    style="
+                        background:#ff6b35;
+                        color:white;
+                        border:none;
+                        padding:8px;
+                        width:100%;
+                        border-radius:8px;
+                        cursor:pointer;
+                        margin-top:5px;
+                    "
+                >
+                    View Food 🍛
+                </button>
+
+            </div>
         `);
 
     });
+
 }
