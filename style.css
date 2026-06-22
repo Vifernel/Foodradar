@@ -160,3 +160,9 @@ nav a {
 .btn-call {
     background: #00A86B;
 }
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 20px;
+}
