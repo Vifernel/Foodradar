@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Food Details</title>
+  <meta charset="UTF-8">
+  <title>Food Details - FoodRadar</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="card">
-  <h2>🍛 Waakye</h2>
-  <p>Traditional Ghanaian rice and beans dish.</p>
-  <p><b>Price:</b> 30 GHS</p>
-  <p><b>Vendor:</b> Mama's Kitchen</p>
+<header>
+  <h1>📍 FoodRadar</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="map.html">Map</a>
+  </nav>
+</header>
 
-  <a class="btn primary" href="https://maps.google.com">📍 Get Directions</a>
-  <a class="btn secondary" href="tel:+233000000000">📞 Call Vendor</a>
-</div>
+<!-- DYNAMIC CONTENT -->
+<div id="food-details"></div>
+
+<script src="app.js"></script>
+<script src="food.js"></script>
 
 </body>
 </html>
