@@ -61,7 +61,6 @@ const food = foods.find(f => f.id === foodId);
 
 
 // DISPLAY FOOD DETAILS
-
 if (food && container) {
 
     container.innerHTML = `
