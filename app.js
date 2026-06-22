@@ -209,3 +209,20 @@ if (document.getElementById("map") && typeof L !== "undefined") {
         () => initMap()
     );
 }
+function orderFood(foodId) {
+
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    const newOrder = {
+        id: Date.now(),
+        foodId,
+        status: "pending",
+        time: new Date().toISOString()
+    };
+
+    orders.push(newOrder);
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    alert("🛒 Order placed successfully!");
+}
