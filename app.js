@@ -7,6 +7,7 @@ console.log("FoodRadar is running 🚀");
 
 const foods = [
 {
+    id: 1,
     name: "Waakye",
     image: "assets/waakye.jpg",
     description: "Traditional Ghanaian rice and beans",
@@ -14,6 +15,7 @@ const foods = [
     distance: "500m"
 },
 {
+    id: 2,
     name: "Fufu & Light Soup",
     image: "assets/fufu.jpg",
     description: "Authentic Ghanaian traditional meal",
@@ -21,6 +23,7 @@ const foods = [
     distance: "800m"
 },
 {
+    id: 3,
     name: "Jollof Rice",
     image: "assets/jollof.jpg",
     description: "Popular African rice dish",
@@ -28,6 +31,7 @@ const foods = [
     distance: "1km"
 },
 {
+    id: 4,
     name: "Kelewele",
     image: "assets/kelewele.jpg",
     description: "Spicy fried plantain",
@@ -45,10 +49,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const foodContainer = document.getElementById("food-container");
 
-    // évite erreur si page n'a pas de container
     if (foodContainer) {
 
-        foods.forEach((food, index) => {
+        foods.forEach((food) => {
 
             const card = document.createElement("div");
             card.classList.add("food-card");
@@ -63,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <span>📍 ${food.distance}</span>
                 </div>
 
-                <button onclick="viewFood(${index})">
+                <button onclick="viewFood(${food.id})">
                     View Food
                 </button>
             `;
@@ -78,8 +81,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // VIEW FOOD NAVIGATION
 // =================================
 
-function viewFood(index) {
-    window.location.href = "food.html?id=" + (index + 1);
+function viewFood(id) {
+    window.location.href = "food.html?id=" + id;
 }
 
 
@@ -97,10 +100,10 @@ if (document.getElementById("map") && typeof L !== "undefined") {
 
 
     const foodPlaces = [
-        { name: "Waakye Spot", lat: 6.6885, lng: -1.6244, food: "Waakye" },
-        { name: "Fufu Kitchen", lat: 6.6950, lng: -1.6300, food: "Fufu & Light Soup" },
-        { name: "Jollof Center", lat: 6.6800, lng: -1.6200, food: "Jollof Rice" },
-        { name: "Kelewele Street", lat: 6.6905, lng: -1.6150, food: "Kelewele" }
+        { id: 1, name: "Waakye Spot", lat: 6.6885, lng: -1.6244, food: "Waakye" },
+        { id: 2, name: "Fufu Kitchen", lat: 6.6950, lng: -1.6300, food: "Fufu & Light Soup" },
+        { id: 3, name: "Jollof Center", lat: 6.6800, lng: -1.6200, food: "Jollof Rice" },
+        { id: 4, name: "Kelewele Street", lat: 6.6905, lng: -1.6150, food: "Kelewele" }
     ];
 
 
@@ -111,8 +114,9 @@ if (document.getElementById("map") && typeof L !== "undefined") {
         marker.bindPopup(`
             <b>${place.food}</b><br>
             ${place.name}<br><br>
-            <button onclick="alert('Food details coming soon 🚀')">
-                View Food
+
+            <button onclick="viewFood(${place.id})">
+                View Food 🍛
             </button>
         `);
 
