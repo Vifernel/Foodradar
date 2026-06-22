@@ -1,30 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>FoodRadar Map</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- LEAFLET MAP -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
+
 <body>
 
 <h2 style="text-align:center;">🍽 Food Near You</h2>
 
 <div id="map" style="height:500px;"></div>
 
+<!-- ============================= -->
+<!-- SUPABASE (READY FOR FUTURE) -->
+<!-- ============================= -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<!-- ============================= -->
+<!-- LEAFLET MAP SCRIPT -->
+<!-- ============================= -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 <script>
 function initMap() {
-  var kumasi = { lat: 6.6885, lng: -1.6244 };
 
-  var map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 14,
-    center: kumasi
+  // Default location (Kumasi)
+  const kumasi = [6.6885, -1.6244];
+
+  const map = L.map('map').setView(kumasi, 14);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  // USER / CENTER MARKER
+  L.marker(kumasi)
+    .addTo(map)
+    .bindPopup("📍 Waakye Spot")
+    .openPopup();
+
+  // FOOD MARKERS (EXAMPLE)
+  const foodPlaces = [
+    { name: "Waakye Spot", lat: 6.6885, lng: -1.6244 },
+    { name: "Fufu Kitchen", lat: 6.6950, lng: -1.6300 },
+    { name: "Jollof Center", lat: 6.6800, lng: -1.6200 },
+    { name: "Kelewele Street", lat: 6.6905, lng: -1.6150 }
+  ];
+
+  foodPlaces.forEach(place => {
+
+    L.marker([place.lat, place.lng])
+      .addTo(map)
+      .bindPopup(`
+        <b>${place.name}</b><br>
+        🍽 Delicious local food<br><br>
+        <button onclick="alert('Food details coming soon 🚀')">
+          View Food
+        </button>
+      `);
+
   });
-
-  // Exemple markers (vendeurs)
-  new google.maps.Marker({position: kumasi, map: map, title: "Waakye Spot"});
 }
-</script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async></script>
+// Auto run
+initMap();
+</script>
 
 </body>
 </html>
