@@ -1,23 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Vendor Profile</title>
+  <meta charset="UTF-8">
+  <title>Vendor Dashboard - FoodRadar</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h2>Mama's Kitchen 👨‍🍳</h2>
+<header>
+  <h1>👨‍🍳 Vendor Dashboard</h1>
+</header>
 
-<p>📍 Kumasi</p>
-<p>⭐ 4.5 rating</p>
+<section>
 
-<h3>Available Food</h3>
-<ul>
-  <li>Waakye - 30 GHS</li>
-  <li>Kelewele - 10 GHS</li>
-</ul>
+  <h2>Add New Food</h2>
 
-<a class="btn primary" href="tel:+233000000000">Call Vendor</a>
+  <input type="text" id="foodName" placeholder="Food name">
+  <input type="text" id="foodImage" placeholder="Image URL (assets/...)">
+  <input type="text" id="foodPrice" placeholder="Price (GHS)">
+  <input type="text" id="foodLocation" placeholder="Location name">
+
+  <button onclick="addFood()">➕ Add Food</button>
+
+</section>
+
+<script src="vendor.js"></script>
 
 </body>
 </html>
