@@ -95,6 +95,11 @@ if (food && container) {
                 📞 Call Vendor
             </a>
 
+            <!-- 🛒 ORDER BUTTON AJOUTÉ ICI -->
+            <button onclick="orderFood()" class="btn-order">
+                🛒 Order Now
+            </button>
+
         </div>
 
     `;
