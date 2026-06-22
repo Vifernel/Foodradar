@@ -50,20 +50,19 @@ const defaultFoods = [
 // =================================
 
 let vendorFoods = JSON.parse(localStorage.getItem("vendorFoods")) || [];
-
 const allFoods = [...defaultFoods, ...vendorFoods];
 
 
 // =================================
-// GPS USER
+// GPS USER (SAFE + FALLBACK)
 // =================================
 
 let userLocation = null;
 
-function getUserLocation(callback) {
+function getUserLocation(success, errorCallback) {
 
     if (!navigator.geolocation) {
-        alert("GPS not supported");
+        if (errorCallback) errorCallback();
         return;
     }
 
@@ -75,18 +74,18 @@ function getUserLocation(callback) {
                 lng: position.coords.longitude
             };
 
-            callback(userLocation);
+            success(userLocation);
         },
         (error) => {
             console.log("GPS error:", error);
-            alert("Please enable location 📍");
+            if (errorCallback) errorCallback();
         }
     );
 }
 
 
 // =================================
-// DISTANCE CALCULATOR (REAL)
+// DISTANCE CALCULATOR
 // =================================
 
 function getDistance(lat1, lon1, lat2, lon2) {
@@ -97,12 +96,12 @@ function getDistance(lat1, lon1, lat2, lon2) {
     const dLon = (lon2 - lon1) * Math.PI / 180;
 
     const a =
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(lat1 * Math.PI / 180) *
         Math.cos(lat2 * Math.PI / 180) *
-        Math.sin(dLon/2) * Math.sin(dLon/2);
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
 
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return R * c;
 }
@@ -115,7 +114,6 @@ function getDistance(lat1, lon1, lat2, lon2) {
 document.addEventListener("DOMContentLoaded", function () {
 
     const foodContainer = document.getElementById("food-container");
-
     if (!foodContainer) return;
 
     allFoods.forEach((food) => {
@@ -153,100 +151,61 @@ function viewFood(id) {
 
 
 // =================================
-// MAP + GPS + UBER EATS STYLE
+// MAP (UBER EATS STYLE + GPS SAFE)
+// =================================
+
+function initMap(lat = 6.6885, lng = -1.6244) {
+
+    const map = L.map('map').setView([lat, lng], 14);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // USER MARKER
+    L.marker([lat, lng])
+        .addTo(map)
+        .bindPopup("📍 You are here")
+        .openPopup();
+
+    // FOOD MARKERS
+    defaultFoods.forEach(place => {
+
+        const distance = getDistance(lat, lng, place.lat, place.lng);
+
+        const marker = L.marker([place.lat, place.lng]).addTo(map);
+
+        marker.bindPopup(`
+            <div style="width:200px">
+
+                <img src="${place.image}"
+                    style="width:100%;height:120px;object-fit:cover;border-radius:10px;">
+
+                <h3>${place.name}</h3>
+
+                <p>📍 ${place.name}</p>
+
+                <p>🚶 ${distance.toFixed(2)} km away</p>
+
+                <button onclick="viewFood(${place.id})"
+                    style="background:#ff6b35;color:white;border:none;padding:8px;width:100%;border-radius:8px;">
+                    View Food 🍛
+                </button>
+
+            </div>
+        `);
+    });
+}
+
+
+// =================================
+// START MAP SAFE
 // =================================
 
 if (document.getElementById("map") && typeof L !== "undefined") {
 
-    getUserLocation((pos) => {
-
-        const map = L.map('map').setView([pos.lat, pos.lng], 14);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
-
-
-        // USER MARKER
-        L.marker([pos.lat, pos.lng])
-            .addTo(map)
-            .bindPopup("📍 You are here")
-            .openPopup();
-
-
-        // FOOD MARKERS
-        defaultFoods.forEach(place => {
-
-            const distance = getDistance(
-                pos.lat,
-                pos.lng,
-                place.lat,
-                place.lng
-            );
-
-            const marker = L.marker([place.lat, place.lng]).addTo(map);
-
-            marker.bindPopup(`
-                <div style="width:200px">
-
-                    <img 
-                        src="${place.image}" 
-                        style="width:100%; height:120px; object-fit:cover; border-radius:10px;"
-                    >
-
-                    <h3 style="margin:5px 0">${place.name}</h3>
-
-                    <p style="margin:0; font-size:12px">
-                        📍 Nearby Food
-                    </p>
-
-                    <p style="margin:5px 0; font-weight:bold">
-                        🚶 ${distance.toFixed(2)} km away
-                    </p>
-
-                    <button 
-                        onclick="viewFood(${place.id})"
-                        style="
-                            background:#ff6b35;
-                            color:white;
-                            border:none;
-                            padding:8px;
-                            width:100%;
-                            border-radius:8px;
-                            cursor:pointer;
-                            margin-top:5px;
-                        "
-                    >
-                        View Food 🍛
-                    </button>
-
-                </div>
-            `);
-        });
-
-    });
-}
-// =================================
-// ORDER SYSTEM (NEW)
-// =================================
-
-function orderFood() {
-
-    const params = new URLSearchParams(window.location.search);
-    const foodId = parseInt(params.get("id"));
-
-    let orders = JSON.parse(localStorage.getItem("orders")) || [];
-
-    const newOrder = {
-        id: Date.now(),
-        foodId: foodId,
-        status: "pending",
-        time: new Date().toISOString()
-    };
-
-    orders.push(newOrder);
-
-    localStorage.setItem("orders", JSON.stringify(orders));
-
-    alert("🛒 Order placed successfully!");
+    getUserLocation(
+        (pos) => initMap(pos.lat, pos.lng),
+        () => initMap()
+    );
 }
