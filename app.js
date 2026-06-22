@@ -1,14 +1,11 @@
-// =================================
-// FOODRADAR APP.JS
-// =================================
-
 console.log("FoodRadar is running 🚀");
 
 
-// Food database (temporary)
+// =================================
+// FOOD DATABASE (MVP)
+// =================================
 
 const foods = [
-
 {
     name: "Waakye",
     image: "assets/waakye.jpg",
@@ -16,7 +13,6 @@ const foods = [
     price: "30 GHS",
     distance: "500m"
 },
-
 {
     name: "Fufu & Light Soup",
     image: "assets/fufu.jpg",
@@ -24,7 +20,6 @@ const foods = [
     price: "40 GHS",
     distance: "800m"
 },
-
 {
     name: "Jollof Rice",
     image: "assets/jollof.jpg",
@@ -32,7 +27,6 @@ const foods = [
     price: "35 GHS",
     distance: "1km"
 },
-
 {
     name: "Kelewele",
     image: "assets/kelewele.jpg",
@@ -40,105 +34,87 @@ const foods = [
     price: "10 GHS",
     distance: "300m"
 }
-
 ];
 
 
-// Wait for page to load (IMPORTANT FIX)
+// =================================
+// FOOD CARDS RENDERING
+// =================================
 
 document.addEventListener("DOMContentLoaded", function () {
 
     const foodContainer = document.getElementById("food-container");
 
-    // Check if container exists (avoid errors on other pages)
-    if (!foodContainer) return;
+    // évite erreur si page n'a pas de container
+    if (foodContainer) {
+
+        foods.forEach((food, index) => {
+
+            const card = document.createElement("div");
+            card.classList.add("food-card");
+
+            card.innerHTML = `
+                <img src="${food.image}" alt="${food.name}">
+                <h3>${food.name}</h3>
+                <p>${food.description}</p>
+
+                <div class="info">
+                    <span>${food.price}</span>
+                    <span>📍 ${food.distance}</span>
+                </div>
+
+                <button onclick="viewFood(${index})">
+                    View Food
+                </button>
+            `;
+
+            foodContainer.appendChild(card);
+        });
+    }
+});
 
 
-    foods.forEach(food => {
+// =================================
+// VIEW FOOD NAVIGATION
+// =================================
 
-        const card = document.createElement("div");
+function viewFood(index) {
+    window.location.href = "food.html?id=" + (index + 1);
+}
 
-        card.classList.add("food-card");
+
+// =================================
+// LEAFLET MAP (SAFE VERSION)
+// =================================
+
+if (document.getElementById("map") && typeof L !== "undefined") {
+
+    const map = L.map('map').setView([6.6885, -1.6244], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
 
-        card.innerHTML = `
+    const foodPlaces = [
+        { name: "Waakye Spot", lat: 6.6885, lng: -1.6244, food: "Waakye" },
+        { name: "Fufu Kitchen", lat: 6.6950, lng: -1.6300, food: "Fufu & Light Soup" },
+        { name: "Jollof Center", lat: 6.6800, lng: -1.6200, food: "Jollof Rice" },
+        { name: "Kelewele Street", lat: 6.6905, lng: -1.6150, food: "Kelewele" }
+    ];
 
-            <img src="${food.image}" alt="${food.name}">
 
-            <h3>${food.name}</h3>
+    foodPlaces.forEach(place => {
 
-            <p>${food.description}</p>
+        const marker = L.marker([place.lat, place.lng]).addTo(map);
 
-            <div class="info">
-
-                <span>${food.price}</span>
-
-                <span>📍 ${food.distance}</span>
-
-            </div>
-
-            <button>View Food</button>
-
-        `;
-
-        foodContainer.appendChild(card);
+        marker.bindPopup(`
+            <b>${place.food}</b><br>
+            ${place.name}<br><br>
+            <button onclick="alert('Food details coming soon 🚀')">
+                View Food
+            </button>
+        `);
 
     });
-
-});
-// =================================
-// FOODRADAR LEAFLET MAP
-// =================================
-
-const map = L.map('map').setView([6.6885, -1.6244], 13); 
-// Kumasi coordinates
-
-// 🌍 OpenStreetMap tiles
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
-
-
-// 🍛 Fake FoodRadar locations (MVP)
-const foodPlaces = [
-    {
-        name: "Waakye Spot",
-        lat: 6.6885,
-        lng: -1.6244,
-        food: "Waakye"
-    },
-    {
-        name: "Fufu Kitchen",
-        lat: 6.6950,
-        lng: -1.6300,
-        food: "Fufu & Light Soup"
-    },
-    {
-        name: "Jollof Center",
-        lat: 6.6800,
-        lng: -1.6200,
-        food: "Jollof Rice"
-    },
-    {
-        name: "Kelewele Street",
-        lat: 6.6905,
-        lng: -1.6150,
-        food: "Kelewele"
-    }
-];
-
-
-// 📍 Add markers
-foodPlaces.forEach(place => {
-
-    const marker = L.marker([place.lat, place.lng]).addTo(map);
-
-    marker.bindPopup(`
-        <b>${place.food}</b><br>
-        ${place.name}<br><br>
-        <button onclick="alert('Open Food Page later 🚀')">
-            View Food
-        </button>
-    `);
-
-});
+}
