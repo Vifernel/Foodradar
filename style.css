@@ -58,3 +58,55 @@ nav a {
   border: 2px solid #00A86B;
   color: #00A86B;
 }
+.food-section {
+    padding: 50px 30px;
+    background: white;
+}
+
+.food-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.food-container {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.food-card {
+    width: 300px;
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.food-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.food-card h3,
+.food-card p {
+    padding: 0 20px;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.food-card button {
+    margin: 0 20px 20px;
+    width: calc(100% - 40px);
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #FF7A00;
+    color: white;
+    cursor: pointer;
+}
