@@ -20,6 +20,26 @@
 <!-- DYNAMIC CONTENT -->
 <div id="food-details"></div>
 
+<!-- 🛒 ORDER BUTTON GLOBAL ACTION (OPTION CLEAN) -->
+<script>
+function orderFood() {
+    const params = new URLSearchParams(window.location.search);
+    const foodId = parseInt(params.get("id"));
+
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    orders.push({
+        id: Date.now(),
+        foodId: foodId,
+        status: "pending"
+    });
+
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    alert("🛒 Order placed successfully!");
+}
+</script>
+
 <!-- SCRIPTS -->
 <script src="app.js"></script>
 <script src="food.js"></script>
