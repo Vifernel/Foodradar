@@ -1,35 +1,40 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Food Details - FoodRadar</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoodRadar — Dish details</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
 <body>
 
-<header>
-  <h1>📍 FoodRadar</h1>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="map.html">Map</a>
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand-mark" aria-hidden="true"></span>
+    FoodRadar
+  </a>
+  <nav class="site-nav">
+    <a href="map.html">Explore map</a>
+    <a href="vendor.html">Become a vendor</a>
+    <a href="login.html" class="nav-cta">Sign in</a>
   </nav>
 </header>
 
-<!-- DYNAMIC CONTENT -->
-<div id="food-details"></div>
+<main>
+  <a class="back-link" href="map.html">← Back to map</a>
+  <div id="food-detail"></div>
+</main>
 
-<!-- ============================= -->
-<!-- SUPABASE (IMPORTANT FUTURE USE) -->
-<!-- ============================= -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
+<footer class="site-footer">
+  <p>FoodRadar — Find food. Discover culture.</p>
+  <p class="footer-sub">Starting in Ghana. Expanding across West Africa.</p>
+</footer>
 
-<!-- ============================= -->
-<!-- APP SCRIPTS -->
-<!-- ============================= -->
-<script src="app.js"></script>
 <script src="food.js"></script>
 
 </body>
