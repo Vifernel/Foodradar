@@ -1,48 +1,17 @@
-console.log("Auth system loaded");
+// FoodRadar — auth (placeholder logic, ready to wire up to Supabase)
 
-// USERS DB (MVP local)
-const users = JSON.parse(localStorage.getItem("users")) || [];
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("login-form");
+  const message = document.getElementById("auth-message");
+  if (!form || !message) return;
 
-// REGISTER
-function registerVendor(name, email, password) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-    const exists = users.find(u => u.email === email);
-    if (exists) {
-        alert("User already exists");
-        return;
-    }
+    // TODO: replace with a real Supabase auth call, e.g.
+    // const { error } = await supabase.auth.signInWithPassword({ email, password });
 
-    const newUser = {
-        id: Date.now(),
-        name,
-        email,
-        password,
-        role: "vendor"
-    };
-
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Account created successfully");
-    window.location.href = "login.html";
-}
-
-
-// LOGIN
-function loginVendor(email, password) {
-
-    const user = users.find(u =>
-        u.email === email && u.password === password
-    );
-
-    if (!user) {
-        alert("Invalid credentials");
-        return;
-    }
-
-    localStorage.setItem("currentUser", JSON.stringify(user));
-
-    alert("Login successful 🚀");
-
-    window.location.href = "vendor.html";
-}
+    message.hidden = false;
+    message.textContent = "Accounts aren't wired up yet — this form is ready for Supabase auth.";
+  });
+});
