@@ -10,7 +10,9 @@ const FOOD_ITEMS = [
     price: "GH₵25",
     distance: "0.3 km",
     emoji: "🍛",
-    description: "Smoky one-pot rice, grilled chicken thigh, fresh pepper sauce on the side."
+    description: "Smoky one-pot rice, grilled chicken thigh, fresh pepper sauce on the side.",
+    lat: 6.6912, lng: -1.6244,
+    phone: "+233241000001"
   },
   {
     id: "f2",
@@ -20,7 +22,9 @@ const FOOD_ITEMS = [
     price: "GH₵18",
     distance: "0.6 km",
     emoji: "🍚",
-    description: "Rice and beans with gari, shito, boiled egg and a wedge of avocado."
+    description: "Rice and beans with gari, shito, boiled egg and a wedge of avocado.",
+    lat: 6.6858, lng: -1.6198,
+    phone: "+233241000002"
   },
   {
     id: "f3",
@@ -30,7 +34,9 @@ const FOOD_ITEMS = [
     price: "GH₵35",
     distance: "1.1 km",
     emoji: "🐟",
-    description: "Grilled tilapia, fermented corn-and-cassava banku, pepper and onion sauce."
+    description: "Grilled tilapia, fermented corn-and-cassava banku, pepper and onion sauce.",
+    lat: 6.6947, lng: -1.6301,
+    phone: "+233241000003"
   },
   {
     id: "f4",
@@ -40,7 +46,9 @@ const FOOD_ITEMS = [
     price: "GH₵10",
     distance: "0.4 km",
     emoji: "🍢",
-    description: "Spiced grilled beef skewers, rolled in yaji pepper mix, cut fresh onion."
+    description: "Spiced grilled beef skewers, rolled in yaji pepper mix, cut fresh onion.",
+    lat: 6.6889, lng: -1.6172,
+    phone: "+233241000004"
   },
   {
     id: "f5",
@@ -50,7 +58,9 @@ const FOOD_ITEMS = [
     price: "GH₵20",
     distance: "0.9 km",
     emoji: "🥣",
-    description: "Pounded cassava and plantain, goat meat light soup, made to order."
+    description: "Pounded cassava and plantain, goat meat light soup, made to order.",
+    lat: 6.6831, lng: -1.6267,
+    phone: "+233241000005"
   },
   {
     id: "f6",
@@ -60,15 +70,26 @@ const FOOD_ITEMS = [
     price: "GH₵8",
     distance: "0.2 km",
     emoji: "🍌",
-    description: "Spiced fried plantain cubes, ginger and pepper, roasted peanuts on top."
+    description: "Spiced fried plantain cubes, ginger and pepper, roasted peanuts on top.",
+    lat: 6.6903, lng: -1.6209,
+    phone: "+233241000006"
   }
 ];
 
-function renderFoodCards() {
+function renderFoodCards(filterType = "all") {
   const container = document.getElementById("food-container");
   if (!container) return;
 
-  container.innerHTML = FOOD_ITEMS.map((item) => `
+  const items = filterType === "all"
+    ? FOOD_ITEMS
+    : FOOD_ITEMS.filter((item) => item.type === filterType);
+
+  if (items.length === 0) {
+    container.innerHTML = `<p class="food-empty">No dishes match this filter yet.</p>`;
+    return;
+  }
+
+  container.innerHTML = items.map((item) => `
     <article class="food-card">
       <div class="food-card-top">
         <span class="food-emoji" aria-hidden="true">${item.emoji}</span>
@@ -84,6 +105,17 @@ function renderFoodCards() {
       <button type="button" class="food-cta" data-food-id="${item.id}">View on map</button>
     </article>
   `).join("");
+
+  container.querySelectorAll(".food-cta").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.foodId;
+      if (typeof focusFoodOnMap === "function") {
+        focusFoodOnMap(id);
+      } else {
+        window.location.href = `map.html#${id}`;
+      }
+    });
+  });
 }
 
-document.addEventListener("DOMContentLoaded", renderFoodCards);
+document.addEventListener("DOMContentLoaded", () => renderFoodCards());
