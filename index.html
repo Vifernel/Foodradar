@@ -1,78 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>FoodRadar</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoodRadar — Find food. Discover culture.</title>
 
-  <!-- 🗺️ LEAFLET CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
-
 <body>
 
-<header>
-  <h1>📍 FoodRadar</h1>
-
-  <nav>
-    <a href="map.html">Explore Food</a>
-    <a href="vendor.html">Become a Vendor</a>
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand-mark" aria-hidden="true"></span>
+    FoodRadar
+  </a>
+  <nav class="site-nav">
+    <a href="map.html">Explore map</a>
+    <a href="vendor.html">Become a vendor</a>
+    <a href="login.html" class="nav-cta">Sign in</a>
   </nav>
 </header>
 
-<!-- HERO -->
-<section class="hero">
+<main>
 
-  <h2>Discover food around you in Kumasi</h2>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Now scanning Kumasi</p>
+      <h1>Find food.<br>Discover culture.</h1>
+      <p class="hero-sub">FoodRadar locates the dishes, stalls and home cooks around you — real plates, real vendors, no guessing where to eat.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="map.html">Explore the map</a>
+        <a class="btn btn-outline" href="vendor.html">Become a vendor</a>
+      </div>
+    </div>
 
-  <p>
-    Find local dishes, street food and vendors near you.
-  </p>
+    <div class="radar" aria-hidden="true">
+      <div class="radar-screen">
+        <div class="radar-ring ring-1"></div>
+        <div class="radar-ring ring-2"></div>
+        <div class="radar-ring ring-3"></div>
+        <div class="radar-sweep"></div>
+        <div id="radar-blips" class="radar-blips"></div>
+      </div>
+    </div>
+  </section>
 
-  <div class="buttons">
+  <section class="city-strip">
+    <p class="city-strip-label">Live markets</p>
+    <div class="city-track">
+      <ul class="city-list">
+        <li>Kumasi</li><li>Accra</li><li>Lomé</li><li>Cotonou</li><li>Lagos</li>
+      </ul>
+      <ul class="city-list" aria-hidden="true">
+        <li>Kumasi</li><li>Accra</li><li>Lomé</li><li>Cotonou</li><li>Lagos</li>
+      </ul>
+    </div>
+  </section>
 
-    <a class="btn primary" href="map.html">
-      📍 Explore Map
-    </a>
+  <section class="food-section" id="food">
+    <div class="section-head">
+      <h2>Popular near you</h2>
+      <p>A live sample of what's on FoodRadar right now.</p>
+    </div>
+    <div id="food-container" class="food-container"></div>
+  </section>
 
-    <a class="btn secondary" href="vendor.html">
-      👨‍🍳 Become a Vendor
-    </a>
+  <section class="how">
+    <div class="section-head">
+      <h2>How scanning works</h2>
+    </div>
+    <ol class="how-list">
+      <li>
+        <span class="how-index">01</span>
+        <h3>Turn on your radar</h3>
+        <p>Share your location so FoodRadar can find what's cooking nearby.</p>
+      </li>
+      <li>
+        <span class="how-index">02</span>
+        <h3>Scan the dishes</h3>
+        <p>Browse plates by name, price and distance — every pin is a real vendor.</p>
+      </li>
+      <li>
+        <span class="how-index">03</span>
+        <h3>Go get it</h3>
+        <p>Get directions or call ahead. No delivery fleet yet — just you and the vendor.</p>
+      </li>
+    </ol>
+  </section>
 
-  </div>
+  <section class="vendor-cta">
+    <p class="eyebrow">For vendors</p>
+    <h2>Put your stall on the map.</h2>
+    <p>Restaurants, street stalls, small shops and home cooks can list their dishes and get discovered by people searching nearby.</p>
+    <a class="btn btn-primary" href="vendor.html">List your food</a>
+  </section>
 
-</section>
+</main>
 
-<!-- FOOD SECTION -->
-<section class="food-section">
+<footer class="site-footer">
+  <p>FoodRadar — Find food. Discover culture.</p>
+  <p class="footer-sub">Starting in Ghana. Expanding across West Africa.</p>
+</footer>
 
-  <h2>Popular Food Near You</h2>
-
-  <div id="food-container" class="food-container"></div>
-
-</section>
-
-<!-- MAP SECTION -->
-<section class="map-section">
-
-  <h2>🗺️ Food Map</h2>
-
-  <div id="map"></div>
-
-</section>
-
-<!-- ========================= -->
-<!-- SCRIPTS (CORRECT ORDER) -->
-<!-- ========================= -->
-
-<!-- Leaflet FIRST (IMPORTANT) -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<!-- Supabase (ready for future auth + database) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
-
-<!-- App logic -->
+<script src="food.js"></script>
 <script src="app.js"></script>
 
 </body>
