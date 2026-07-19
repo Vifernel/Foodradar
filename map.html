@@ -1,75 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>FoodRadar Map</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoodRadar — Explore the map</title>
 
-  <!-- LEAFLET MAP -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
-
 <body>
 
-<h2 style="text-align:center;">🍽 Food Near You</h2>
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand-mark" aria-hidden="true"></span>
+    FoodRadar
+  </a>
+  <nav class="site-nav">
+    <a href="map.html">Explore map</a>
+    <a href="vendor.html">Become a vendor</a>
+    <a href="login.html" class="nav-cta">Sign in</a>
+  </nav>
+</header>
 
-<div id="map" style="height:500px;"></div>
+<main>
 
-<!-- ============================= -->
-<!-- SUPABASE (READY FOR FUTURE) -->
-<!-- ============================= -->
+  <section class="map-hero">
+    <p class="eyebrow">Now scanning Kumasi</p>
+    <h1>Every dish, on the map.</h1>
+    <p class="hero-sub">Filter by vendor type and tap a pin for directions or a call.</p>
+
+    <div class="filter-bar">
+      <button type="button" class="filter-chip active" data-filter="all">All</button>
+      <button type="button" class="filter-chip" data-filter="Street stall">Street stall</button>
+      <button type="button" class="filter-chip" data-filter="Restaurant">Restaurant</button>
+      <button type="button" class="filter-chip" data-filter="Home cook">Home cook</button>
+    </div>
+  </section>
+
+  <section class="map-wrap">
+    <div id="map"></div>
+  </section>
+
+  <section class="food-section" id="food">
+    <div class="section-head">
+      <h2>All results</h2>
+      <p>Tap "View on map" to jump to a pin.</p>
+    </div>
+    <div id="food-container" class="food-container"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>FoodRadar — Find food. Discover culture.</p>
+  <p class="footer-sub">Starting in Ghana. Expanding across West Africa.</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
-
-<!-- ============================= -->
-<!-- LEAFLET MAP SCRIPT -->
-<!-- ============================= -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<script>
-function initMap() {
-
-  // Default location (Kumasi)
-  const kumasi = [6.6885, -1.6244];
-
-  const map = L.map('map').setView(kumasi, 14);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
-
-  // USER / CENTER MARKER
-  L.marker(kumasi)
-    .addTo(map)
-    .bindPopup("📍 Waakye Spot")
-    .openPopup();
-
-  // FOOD MARKERS (EXAMPLE)
-  const foodPlaces = [
-    { name: "Waakye Spot", lat: 6.6885, lng: -1.6244 },
-    { name: "Fufu Kitchen", lat: 6.6950, lng: -1.6300 },
-    { name: "Jollof Center", lat: 6.6800, lng: -1.6200 },
-    { name: "Kelewele Street", lat: 6.6905, lng: -1.6150 }
-  ];
-
-  foodPlaces.forEach(place => {
-
-    L.marker([place.lat, place.lng])
-      .addTo(map)
-      .bindPopup(`
-        <b>${place.name}</b><br>
-        🍽 Delicious local food<br><br>
-        <button onclick="alert('Food details coming soon 🚀')">
-          View Food
-        </button>
-      `);
-
-  });
-}
-
-// Auto run
-initMap();
-</script>
+<script src="food.js"></script>
+<script src="map.js"></script>
 
 </body>
 </html>
