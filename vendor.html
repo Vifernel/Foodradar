@@ -1,54 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Vendor Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoodRadar — Become a vendor</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
 <body>
 
-<header>
-  <h1>👨‍🍳 Vendor Dashboard</h1>
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand-mark" aria-hidden="true"></span>
+    FoodRadar
+  </a>
+  <nav class="site-nav">
+    <a href="map.html">Explore map</a>
+    <a href="vendor.html">Become a vendor</a>
+    <a href="login.html" class="nav-cta">Sign in</a>
+  </nav>
 </header>
 
-<!-- ========================= -->
-<!-- ADD FOOD FORM -->
-<!-- ========================= -->
-<section style="max-width:500px;margin:auto;">
+<main>
 
-  <h2>Add New Food</h2>
+  <section class="vendor-hero">
+    <p class="eyebrow">For vendors</p>
+    <h1>Put your stall on the radar.</h1>
+    <p class="hero-sub">Restaurants, street stalls, small shops and home cooks — get discovered by people searching nearby, no delivery fleet required to start.</p>
+  </section>
 
-  <input id="name" placeholder="Food name"><br><br>
-  <input id="price" placeholder="Price"><br><br>
-  <input id="image" placeholder="Image URL"><br><br>
-  <textarea id="desc" placeholder="Description"></textarea><br><br>
+  <section class="benefit-grid">
+    <div class="benefit-card">
+      <span class="how-index">01</span>
+      <h3>Get found nearby</h3>
+      <p>Show up on the map for locals, travelers and students searching for food around them.</p>
+    </div>
+    <div class="benefit-card">
+      <span class="how-index">02</span>
+      <h3>We help you get listed</h3>
+      <p>Early vendors are onboarded directly by the FoodRadar team — you can claim and manage your own listing later.</p>
+    </div>
+    <div class="benefit-card">
+      <span class="how-index">03</span>
+      <h3>No delivery fleet needed</h3>
+      <p>Start with discovery, directions and direct contact. Delivery partners come later, not first.</p>
+    </div>
+  </section>
 
-  <button onclick="addFood()">➕ Add Food</button>
+  <section class="vendor-form-wrap">
+    <div class="auth-card">
+      <p class="eyebrow">Application</p>
+      <h2>Tell us about your food</h2>
 
-</section>
+      <form id="vendor-form" class="auth-form">
+        <label>
+          Business / vendor name
+          <input type="text" name="vendorName" placeholder="e.g. Auntie Ama's Kitchen" required>
+        </label>
 
-<hr>
+        <label>
+          Vendor type
+          <select name="vendorType" required>
+            <option value="">Select one</option>
+            <option>Street stall</option>
+            <option>Restaurant</option>
+            <option>Home cook</option>
+          </select>
+        </label>
 
-<!-- ========================= -->
-<!-- MY FOODS LIST -->
-<!-- ========================= -->
-<section style="max-width:700px;margin:auto;">
+        <label>
+          Phone number
+          <input type="tel" name="phone" placeholder="+233 24 000 0000" required>
+        </label>
 
-  <h2>🍽 My Foods</h2>
-  <div id="myFoods"></div>
+        <label>
+          Location / landmark
+          <input type="text" name="location" placeholder="e.g. Near Kejetia Market, Kumasi" required>
+        </label>
 
-</section>
+        <label>
+          First dish to list
+          <input type="text" name="dishName" placeholder="e.g. Jollof Rice & Chicken" required>
+        </label>
 
-<!-- ========================= -->
-<!-- SUPABASE CORE -->
-<!-- ========================= -->
+        <label>
+          Price
+          <input type="text" name="price" placeholder="e.g. GH₵25" required>
+        </label>
+
+        <label>
+          Opening hours
+          <input type="text" name="hours" placeholder="e.g. 11am – 9pm">
+        </label>
+
+        <button type="submit" class="btn btn-primary full">Submit application</button>
+      </form>
+
+      <div id="vendor-message" class="auth-message" hidden></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>FoodRadar — Find food. Discover culture.</p>
+  <p class="footer-sub">Starting in Ghana. Expanding across West Africa.</p>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
-
-<!-- ========================= -->
-<!-- VENDOR LOGIC -->
-<!-- ========================= -->
 <script src="vendor.js"></script>
 
 </body>
