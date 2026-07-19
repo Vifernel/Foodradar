@@ -1,78 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Vendor Login - FoodRadar</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FoodRadar — Sign in</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
 <body>
 
-<header>
-  <h1>👨‍🍳 FoodRadar Login</h1>
+<header class="site-header">
+  <a class="brand" href="index.html">
+    <span class="brand-mark" aria-hidden="true"></span>
+    FoodRadar
+  </a>
+  <nav class="site-nav">
+    <a href="map.html">Explore map</a>
+    <a href="vendor.html">Become a vendor</a>
+    <a href="login.html" class="nav-cta">Sign in</a>
+  </nav>
 </header>
 
-<!-- ======================= -->
-<!-- LOGIN FORM -->
-<!-- ======================= -->
-<section style="max-width:400px;margin:auto;">
+<main class="auth-main">
+  <div class="auth-card">
+    <p class="eyebrow">Welcome back</p>
+    <h1>Sign in to FoodRadar</h1>
 
-  <h2>Vendor Login</h2>
+    <form id="login-form" class="auth-form">
+      <label>
+        Email
+        <input type="email" name="email" placeholder="you@example.com" required>
+      </label>
+      <label>
+        Password
+        <input type="password" name="password" placeholder="••••••••" required>
+      </label>
+      <button type="submit" class="btn btn-primary full">Sign in</button>
+    </form>
 
-  <input id="email" placeholder="Email"><br><br>
-  <input id="password" type="password" placeholder="Password"><br><br>
+    <div id="auth-message" class="auth-message" hidden></div>
 
-  <button onclick="login()">Login</button>
+    <p class="auth-note">Just browsing? <a href="map.html">Explore the map</a> — no account needed.</p>
+    <p class="auth-note">Selling food? <a href="vendor.html">Become a vendor</a> instead.</p>
+  </div>
+</main>
 
-</section>
+<footer class="site-footer">
+  <p>FoodRadar — Find food. Discover culture.</p>
+  <p class="footer-sub">Starting in Ghana. Expanding across West Africa.</p>
+</footer>
 
-<hr>
-
-<!-- ======================= -->
-<!-- REGISTER FORM -->
-<!-- ======================= -->
-<section style="max-width:400px;margin:auto;">
-
-  <h3>Create Account</h3>
-
-  <input id="nameR" placeholder="Name"><br><br>
-  <input id="emailR" placeholder="Email"><br><br>
-  <input id="passwordR" type="password" placeholder="Password"><br><br>
-
-  <button onclick="register()">Create Account</button>
-
-</section>
-
-<!-- ======================= -->
-<!-- SUPABASE CORE -->
-<!-- ======================= -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
-
-<!-- ======================= -->
-<!-- AUTH LOGIC -->
-<!-- ======================= -->
 <script src="auth.js"></script>
-
-<!-- ======================= -->
-<!-- UI FUNCTIONS -->
-<!-- ======================= -->
-<script>
-function login(){
-    loginVendor(
-        document.getElementById("email").value,
-        document.getElementById("password").value
-    );
-}
-
-function register(){
-    registerVendor(
-        document.getElementById("nameR").value,
-        document.getElementById("emailR").value,
-        document.getElementById("passwordR").value
-    );
-}
-</script>
 
 </body>
 </html>
