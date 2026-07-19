@@ -1,73 +1,19 @@
-console.log("Vendor dashboard loaded");
+// FoodRadar — vendor application (placeholder logic, ready to wire up to Supabase)
 
-// =================================
-// LOAD VENDOR FOODS
-// =================================
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("vendor-form");
+  const message = document.getElementById("vendor-message");
+  if (!form || !message) return;
 
-let foods = JSON.parse(localStorage.getItem("vendorFoods")) || [];
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
+    // TODO: replace with a real Supabase insert, e.g.
+    // const { error } = await supabase.from("vendor_applications").insert({ ...formData });
 
-// =================================
-// ADD FOOD (UPLOAD SYSTEM)
-// =================================
-
-function addFood() {
-
-    const name = document.getElementById("name").value;
-    const price = document.getElementById("price").value;
-    const image = document.getElementById("image").value;
-    const description = document.getElementById("desc").value;
-
-    if (!name || !price || !image) {
-        alert("Please fill all required fields");
-        return;
-    }
-
-    const newFood = {
-        id: Date.now(),
-        name,
-        price,
-        image,
-        description,
-        lat: 6.6885,
-        lng: -1.6244
-    };
-
-    foods.push(newFood);
-    localStorage.setItem("vendorFoods", JSON.stringify(foods));
-
-    alert("Food uploaded 🚀");
-
-    renderFoods();
-}
-
-
-// =================================
-// RENDER DASHBOARD FOODS
-// =================================
-
-function renderFoods() {
-
-    const container = document.getElementById("myFoods");
-    if (!container) return;
-
-    container.innerHTML = "";
-
-    foods.forEach(food => {
-
-        container.innerHTML += `
-            <div class="food-item">
-                <img src="${food.image}" width="100">
-                <h3>${food.name}</h3>
-                <p>${food.price}</p>
-            </div>
-        `;
-    });
-}
-
-
-// =================================
-// INIT
-// =================================
-
-document.addEventListener("DOMContentLoaded", renderFoods);
+    const name = form.vendorName.value || "there";
+    message.hidden = false;
+    message.textContent = `Thanks, ${name}! We've got your application — the FoodRadar team will reach out to get your first dish live.`;
+    form.reset();
+  });
+});
