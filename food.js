@@ -95,7 +95,7 @@ function renderFoodCards(filterType = "all") {
         <span class="food-emoji" aria-hidden="true">${item.emoji}</span>
         <span class="food-tag">${item.type}</span>
       </div>
-      <h3>${item.name}</h3>
+      <h3><a href="food.html?id=${item.id}">${item.name}</a></h3>
       <p class="food-vendor">${item.vendor}</p>
       <p class="food-desc">${item.description}</p>
       <div class="food-meta">
@@ -119,3 +119,40 @@ function renderFoodCards(filterType = "all") {
 }
 
 document.addEventListener("DOMContentLoaded", () => renderFoodCards());
+
+function renderFoodDetail() {
+  const mount = document.getElementById("food-detail");
+  if (!mount) return;
+
+  const id = new URLSearchParams(window.location.search).get("id");
+  const item = FOOD_ITEMS.find((f) => f.id === id) || FOOD_ITEMS[0];
+
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}`;
+  const callUrl = item.phone ? `tel:${item.phone}` : null;
+
+  mount.innerHTML = `
+    <div class="food-details">
+      <div class="food-details-visual">
+        <span>${item.emoji}</span>
+      </div>
+      <div class="food-details-content">
+        <span class="food-tag">${item.type}</span>
+        <h1>${item.name}</h1>
+        <p class="food-vendor">${item.vendor}</p>
+        <p class="food-detail-desc">${item.description}</p>
+        <div class="food-meta">
+          <span class="food-price">${item.price}</span>
+          <span class="food-distance">${item.distance}</span>
+        </div>
+      </div>
+      <div class="food-actions">
+        <a class="btn-map" href="${directionsUrl}" target="_blank" rel="noopener">Get directions</a>
+        ${callUrl ? `<a class="btn-call" href="${callUrl}">Call vendor</a>` : ""}
+      </div>
+    </div>
+  `;
+
+  document.title = `${item.name} — FoodRadar`;
+}
+
+document.addEventListener("DOMContentLoaded", renderFoodDetail);
